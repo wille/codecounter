@@ -34,20 +34,25 @@ def index(source):
                 if folder is "." and relative.startswith("." + os.sep):
                     relative = relative[2:]
 
-                list.append(relative)
+                if relative.endswith(extension):
+                    list.append(relative)
                 
     return list
 
 if __name__ == "__main__":
     print("Starting codecounter")
     
+    lines = 0;
     list = index(folder)
         
     for file in list:
-        if file.endswith(extension):
-            with open(file) as f:
-                print(file);
-                flines = len(f.readlines())
-                print(flines)
+        with open(file) as f:
+            print(file);
+            flines = len(f.readlines())
+            lines += flines
+            print(flines)
+                
+    print("Total files: " + str(len(list)))
+    print("Total lines: " + str(lines))            
     
     print("Complete")
