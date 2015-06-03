@@ -1,13 +1,22 @@
 import argparse
 import os
+import re
 
 argparse = argparse.ArgumentParser()
 argparse.add_argument("-d", "--dir", dest = "dir")
+argparse.add_argument("-e", "--extension", dest = "extension")
+argparse.add_argument("-v", "--verbose", action = "store_true")
 
 args = argparse.parse_args()
 
 global folder
 folder = args.dir or "."
+
+global extension
+extension = args.extension or "."
+
+global verbose
+verbose = args.verbose
 
 def index(source):
     list = []
@@ -33,5 +42,12 @@ if __name__ == "__main__":
     print("Starting codecounter")
     
     list = index(folder)
+        
+    for file in list:
+        if file.endswith(extension):
+            with open(file) as f:
+                print(file);
+                flines = len(f.readlines())
+                print(flines)
     
     print("Complete")
