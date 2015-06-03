@@ -1,6 +1,9 @@
 import argparse
 import os
 import re
+from counters import *
+from counters import modules
+import sys
 
 argparse = argparse.ArgumentParser()
 argparse.add_argument("-d", "--dir", dest = "dir")
@@ -34,8 +37,11 @@ def index(source):
                 if folder is "." and relative.startswith("." + os.sep):
                     relative = relative[2:]
 
-                if relative.endswith(extension):
-                    list.append(relative)
+                for m in modules:
+                    module = m()
+                    for ext in module.extensions():
+                        if relative.endswith(ext):
+                            list.append(relative)                    
                 
     return list
 
@@ -53,6 +59,6 @@ if __name__ == "__main__":
             print(flines)
                 
     print("Total files: " + str(len(list)))
-    print("Total lines: " + str(lines))            
-    
+    print("Total lines: " + str(lines))       
+        
     print("Complete")
