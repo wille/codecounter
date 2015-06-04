@@ -4,6 +4,7 @@ import re
 from counters import *
 from counters import modules
 import sys
+import os.path
 
 argparse = argparse.ArgumentParser()
 argparse.add_argument("-d", "--dir", dest = "dir")
@@ -53,12 +54,17 @@ if __name__ == "__main__":
     list = index(folder)
         
     for file, module in list:
-        with open(file) as f:
-            print(file);
-            total, sloc = module.count(f.readlines())
-            totallines += total
-            totalsloc += sloc
-                
+        file = folder + os.sep + file
+
+        try:
+            if os.path.isfile(file):
+                with open(file) as f:
+                    print(file);
+                    total, sloc = module.count(f.readlines())
+                    totallines += total
+                    totalsloc += sloc
+        except:
+            pass       
     print("Total files: " + str(len(list)))
     print("Total lines: " + str(totallines))       
     print("Total sloc: " + str(totalsloc))
