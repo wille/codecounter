@@ -1,5 +1,6 @@
 from . import python
+from . import java
 
-__all__ = [ "python" ]
+__all__ = [ "python", "java" ]
 
-modules =  [ python.Python ]
+modules =  [ python.Python, java.Java ]
