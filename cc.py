@@ -41,24 +41,26 @@ def index(source):
                     module = m()
                     for ext in module.extensions():
                         if relative.endswith(ext):
-                            list.append(relative)                    
+                            list.append([relative, module])                    
                 
     return list
 
 if __name__ == "__main__":
     print("Starting codecounter")
     
-    lines = 0;
+    totallines = 0
+    totalsloc = 0
     list = index(folder)
         
-    for file in list:
+    for file, module in list:
         with open(file) as f:
             print(file);
-            flines = len(f.readlines())
-            lines += flines
-            print(flines)
+            total, sloc = module.count(f.readlines())
+            totallines += total
+            totalsloc += sloc
                 
     print("Total files: " + str(len(list)))
-    print("Total lines: " + str(lines))       
+    print("Total lines: " + str(totallines))       
+    print("Total sloc: " + str(totalsloc))
         
     print("Complete")
