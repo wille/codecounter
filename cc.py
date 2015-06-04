@@ -51,22 +51,32 @@ if __name__ == "__main__":
     
     totallines = 0
     totalsloc = 0
+    
+    print("Indexing " + folder + "...")
+    
     list = index(folder)
+    
+    print("Counting " + str(len(list)) + " files...")
         
     for file, module in list:
         file = folder + os.sep + file
 
         try:
             if os.path.isfile(file):
-                with open(file) as f:
-                    print(file);
+                with open(file) as f:                        
                     total, sloc = module.count(f.readlines())
                     totallines += total
                     totalsloc += sloc
+                    
+                    if verbose:
+                        print(file + ", Total: " + str(total) + ", SLOC: " + str(sloc))
         except:
             pass       
-    print("Total files: " + str(len(list)))
+
     print("Total lines: " + str(totallines))       
     print("Total sloc: " + str(totalsloc))
+    
+    p = round((totalsloc / totallines) * 100, 2)
+    print("Actual code: " + str(p) + "%")
         
     print("Complete")
