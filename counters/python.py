@@ -14,7 +14,7 @@ class Python(Counter):
         return total, sloc
     
     def is_valid(self, line):
-        return True
+        return not line.startswith("#") and len(line.strip()) > 0
         
     def extensions(self):
         return [ "py" ]
